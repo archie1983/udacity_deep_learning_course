@@ -14,8 +14,8 @@ class NeuralNetwork(object):
 
         self.weights_hidden_to_output = np.random.normal(0.0, self.hidden_nodes**-0.5, 
                                        (self.hidden_nodes, self.output_nodes))
-        #self.lr = learning_rate
-        self.learning_rate = learning_rate
+        self.lr = learning_rate
+        #self.learning_rate = learning_rate
         
         #### TODO: Set self.activation_function to your implemented sigmoid function ####
         #
@@ -148,11 +148,11 @@ class NeuralNetwork(object):
         '''
         #print("weights_hidden_to_output = ",self.weights_hidden_to_output)
         #print("weights_input_to_hidden = ",self.weights_input_to_hidden)
-        self.weights_hidden_to_output += self.learning_rate * delta_weights_h_o / n_records # update hidden-to-output weights with gradient descent step
-        self.weights_input_to_hidden += self.learning_rate * delta_weights_i_h / n_records # update input-to-hidden weights with gradient descent step
+        self.weights_hidden_to_output += self.lr * delta_weights_h_o / n_records # update hidden-to-output weights with gradient descent step
+        self.weights_input_to_hidden += self.lr * delta_weights_i_h / n_records # update input-to-hidden weights with gradient descent step
         #print("UW:")
         #print("weights_hidden_to_output = ",self.weights_hidden_to_output)
-        #print("learning_rate = ",self.learning_rate)
+        #print("learning_rate = ",self.lr)
         #print("delta_weights_h_o = ",delta_weights_h_o)
         #print("n_records = ",n_records)
         #print("weights_input_to_hidden = ",self.weights_input_to_hidden)
@@ -184,15 +184,15 @@ class NeuralNetwork(object):
 ##########################################################
 
 ### Need to choose a number here a level that stops shortly after the validation loss is no longer decreasing
-iterations = 1500
+iterations = 7500
 
 ### Each batch will contain 128 data points according to Stochastics Gradient Descent script that is used
 ### According to course notes, the learning rate could be chosen as a divison of 1 / (size of training set)
-learning_rate = 0.17#0.0078125
+learning_rate = 0.35#0.0078125
 
 ### According to course notes, the best number to choose here is between the number of input and output nodes.
 ### Hence the number of input nodes is 56, let's try something in between. Too many nodes will overfit the model.
-hidden_nodes = 5#28
+hidden_nodes = 15#28
 output_nodes = 1
 
 ### Sets that work well:
