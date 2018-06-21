@@ -192,7 +192,7 @@ learning_rate = 0.35#0.0078125
 
 ### According to course notes, the best number to choose here is between the number of input and output nodes.
 ### Hence the number of input nodes is 56, let's try something in between. Too many nodes will overfit the model.
-hidden_nodes = 15#28
+hidden_nodes = 28
 output_nodes = 1
 
 ### Sets that work well:
@@ -333,3 +333,15 @@ output_nodes = 1
 ### Hopefully it's not a local minimum, but looking at the prediction result, it seems to predict really well. I wonder if another perceptron could be created that tries to optimize these parameters (iterations, learning rate and hidden node count) by running this neural network. Yeah, I know, the complexity would be at least square if not exponential, but still...
 
 ### It seems that all these models struggle to predict the reduced demand around 22nd - 26th of December and then 28th - 30th of December. Well, obviously those are days that people often may take off work although they are working days. Perhaps we need an extra input feature to reflect that, but that would require synthesizing it and since it wasn't required in the project, I will probably not have time for that.
+
+### Ok, the above values were a "local minimum" configuration. Better ones can be found. Validation loss is now at 0.202, but it takes a long time to train.
+#iterations = 7500
+#learning_rate = 0.35#0.0078125
+#hidden_nodes = 15#28
+#output_nodes = 1
+
+### And and even better result (good enought to submit now) can be achieved with the recommended number of hidden nodes (half of input features, so 28) and with huge enough number of iterations. Training loss: 0.057 ... Validation loss: 0.134
+#iterations = 7500
+#learning_rate = 0.35
+#hidden_nodes = 28
+#output_nodes = 1
