@@ -1,0 +1,81 @@
+
+Requires Changes
+4 specifications require changes
+Required Files and Tests
+
+The project submission contains the project notebook, called “dlnd_face_generation.ipynb”.
+
+All the unit tests in project have passed.
+Build the Neural Network
+
+The function model_inputs is implemented correctly.
+
+Good Job using placeholders which are the foundation for any computation graph.
+
+A placeholder is simply a variable that we will assign data to at a later date. It allows us to create our operations and build our computation graph, without needing the data.
+
+In TensorFlow terminology, we then feed data into the graph through these placeholders.
+
+The function discriminator is implemented correctly.
+
+Awesome Job making discriminator a convolution network using series of convolution layers with the following strengths and a few suggestions to improve upon the weakness:
+Strengths
+
+    For Downsampling, you used Conv2d + stride to avoid making sparse gradients as the stability of the GAN game suffers if you have sparse gradients.
+
+    Used sigmoid as the last/output layer
+
+    Used Leaky Relu instead of relu to avoid sparse gradients as leaky_relu allows gradients to flow backwards unimpeded.
+
+    Used Batch Normalisation as it alleviates a lot of headaches with properly initializing neural networks by explicitly forcing the activations throughout a network to take on a unit gaussian distribution at the beginning of the training. In the implementation, applying this technique usually amounts to inserting the BatchNorm layer immediately after fully connected layers (or convolutional layers, as it's the case here), and before non-linearities.
+
+Suggestions
+
+    Use Xavier weight initialization (Link for more details) to break symmetry and therefore, help in converging the model faster as well as help in preventing prevent local minima as it's recommended for DCGANs.
+
+    Use Dropouts in discriminator so as to make it less prone to the mistakes the generator can exploit instead of learning the data distribution as mentioned here. Using dropouts in Image Generation to improve performance by increasing the noise and making the network more noise tolerant (and thus, able to generalise better) was first introduced in the pix2pix paper which uses it after BatchNorm but before ReLU.
+
+The function generator is implemented correctly.
+
+Just follow the tips of weight initialisation and using dropouts as that for the discriminator.
+
+The function model_loss is implemented correctly.
+
+Awesome job here as the loss function for GANs can sometimes be very confusing. For more tips refer this link about GAN-Hacks .
+
+A suggestion:
+
+    To prevent discriminator from being too strong as well as to help it generalise better the discriminator labels are reduced from 1 to 0.9. This is called label smoothing (one-sided).
+    A possible TensorFlow implementation is labels = tf.ones_like(tensor) * (1 - smooth)
+
+The function model_opt is implemented correctly.
+Neural Network Training
+
+The function train is implemented correctly.
+
+    It should build the model using model_inputs, model_loss, and model_opt.
+    It should show output of the generator using the show_generator_output function
+
+Nice work joining all the parts together and making a Deep Convolution GAN !
+Require Changes
+
+However, Since we are using tanh as the last layer of the generator output and so the real image should also be normalized so that the input for the discriminator (be it from generator or the real image) lies within the same range, we have to normalise the input images between -1 and 1.
+
+Now I'd like you to figure out the current range (either by using the numpys' min and max or by carefully reading the data description given in the notebook) and then normalise it such that it lies between -1 and 1.
+
+The parameters are set reasonable numbers.
+
+I'd like to suggest you to go through the actual paper and then take a look at the hyper-parameters values being used there. Anyway, I'm putting forward a few suggestions on improving the choice of hyperparameters here for celebA as well:
+
+    The beta1 is high. Values like 0.1 to 0.3 have shown to get best results.
+
+    The batch size used is a bit too large. Try values like 16 to 32 for better results because
+        If you choose a batch size too small then the gradients will become more unstable and would need to reduce the learning rate. So batch size and learning rate are linked.
+        Also if one use a batch size too big then the gradients will become less noisy but it will take longer to converge.
+
+    The current learning rate is ok but can be a bit higher. The DCGAN with this architectural structure remains stable with lr between 0.0001 and 0.0008 .
+
+The project generates realistic faces. It should be obvious that images generated look like faces.
+
+Follow through the suggestions and you'll get fantastic results.
+
